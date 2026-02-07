@@ -16,11 +16,13 @@ import '../widgets/action_tip_card.dart';
 /// Displays 3-stage results: Summary / Translation / Action Tip
 class ResultScreen extends StatefulWidget {
   final String imagePath;
+  final String? ocrText;
   final FortuneAnalysis? analysis;
 
   const ResultScreen({
     super.key,
     required this.imagePath,
+    this.ocrText,
     this.analysis,
   });
 
@@ -32,15 +34,16 @@ class _ResultScreenState extends State<ResultScreen> {
   final TextEditingController _shrineNameController = TextEditingController();
   final TextEditingController _memoController = TextEditingController();
 
-  // Mock data for demonstration
-  late FortuneAnalysis _mockAnalysis;
+  late FortuneAnalysis _analysis;
+  late String _ocrText;
 
   @override
   void initState() {
     super.initState();
 
-    // Use provided analysis or create mock data
-    _mockAnalysis = widget.analysis ??
+    // Use provided data or fallback to mock
+    _ocrText = widget.ocrText ?? '（OCRテキストがありません）';
+    _analysis = widget.analysis ??
         FortuneAnalysis(
           fortuneGrade: '大吉',
           summaryOneLine: '新しいことを始めるのに最適な時期です',
@@ -91,23 +94,23 @@ class _ResultScreenState extends State<ResultScreen> {
 
             // ① Summary Card (一言要約)
             SummaryCard(
-              summary: _mockAnalysis.summaryOneLine,
-              fortuneGrade: _mockAnalysis.fortuneGrade,
+              summary: _analysis.summaryOneLine,
+              fortuneGrade: _analysis.fortuneGrade,
             ),
 
             const SizedBox(height: AppLayout.space20),
 
             // ② Translation Card (現代語訳)
             TranslationCard(
-              translation: _mockAnalysis.modernTranslation,
-              keywords: _mockAnalysis.keywords,
+              translation: _analysis.modernTranslation,
+              keywords: _analysis.keywords,
             ),
 
             const SizedBox(height: AppLayout.space20),
 
             // ③ Action Tip Card (今日の一手)
             ActionTipCard(
-              actionTip: _mockAnalysis.actionTipToday,
+              actionTip: _analysis.actionTipToday,
             ),
 
             const SizedBox(height: AppLayout.space32),

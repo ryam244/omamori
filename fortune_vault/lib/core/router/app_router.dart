@@ -11,6 +11,7 @@ import '../../features/processing/presentation/screens/processing_screen.dart';
 import '../../features/result/presentation/screens/result_screen.dart';
 import '../../features/history/presentation/screens/history_screen.dart';
 import '../../features/history/presentation/screens/detail_screen.dart';
+import '../../models/fortune_analysis.dart';
 // import '../../features/settings/presentation/screens/settings_screen.dart';
 
 /// Fortune Vault App Router Configuration
@@ -83,6 +84,8 @@ class AppRouter {
         builder: (context, state) {
           final extra = state.extra as Map<String, dynamic>?;
           final imagePath = extra?['imagePath'] as String?;
+          final ocrText = extra?['ocrText'] as String?;
+          final analysis = extra?['analysis'] as FortuneAnalysis?;
 
           if (imagePath == null) {
             return const _PlaceholderScreen(
@@ -91,7 +94,11 @@ class AppRouter {
             );
           }
 
-          return ResultScreen(imagePath: imagePath);
+          return ResultScreen(
+            imagePath: imagePath,
+            ocrText: ocrText,
+            analysis: analysis,
+          );
         },
       ),
       GoRoute(

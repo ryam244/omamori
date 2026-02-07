@@ -6,6 +6,9 @@ import '../../../../core/constants/colors.dart';
 import '../../../../core/constants/text_styles.dart';
 import '../../../../core/constants/layout.dart';
 import '../../../../core/router/app_router.dart';
+import '../../services/ocr_service.dart';
+import '../../services/llm_service.dart';
+import '../../../../models/fortune_analysis.dart';
 
 /// Processing Screen - OCR and LLM analysis
 /// Displays progress and handles errors gracefully
@@ -27,6 +30,12 @@ class _ProcessingScreenState extends State<ProcessingScreen>
   ProcessingStage _currentStage = ProcessingStage.ocr;
   String? _errorMessage;
 
+  final OcrService _ocrService = OcrService();
+  final LlmService _llmService = LlmService(provider: LlmProvider.mock);
+
+  String? _ocrText;
+  FortuneAnalysis? _analysis;
+
   @override
   void initState() {
     super.initState();
@@ -42,6 +51,7 @@ class _ProcessingScreenState extends State<ProcessingScreen>
   @override
   void dispose() {
     _animationController.dispose();
+    _ocrService.dispose();
     super.dispose();
   }
 
@@ -256,7 +266,7 @@ class _ProcessingScreenState extends State<ProcessingScreen>
     );
   }
 
-  /// Start processing (Mock implementation)
+  /// Start processing with actual OCR and LLM
   Future<void> _startProcessing() async {
     try {
       // Stage 1: OCR
@@ -265,14 +275,36 @@ class _ProcessingScreenState extends State<ProcessingScreen>
         _errorMessage = null;
       });
 
-      await Future.delayed(const Duration(seconds: 2));
+      final ocrResult = await _ocrService.extractText(widget.imagePath);
+
+      if (!ocrResult.success || ocrResult.text.isEmpty) {
+        if (mounted) {
+          setState(() {
+            _errorMessage = ocrResult.error ?? 'テキストを読み取れませんでした。\n明るい場所で、文字がはっきり見えるように撮影してください。';
+          });
+        }
+        return;
+      }
+
+      _ocrText = ocrResult.text;
 
       // Stage 2: LLM Analysis
       if (mounted) {
         setState(() => _currentStage = ProcessingStage.llm);
       }
 
-      await Future.delayed(const Duration(seconds: 3));
+      final llmResult = await _llmService.analyzeFortune(ocrResult.text);
+
+      if (!llmResult.success || llmResult.analysis == null) {
+        if (mounted) {
+          setState(() {
+            _errorMessage = llmResult.error ?? '解析に失敗しました。もう一度お試しください。';
+          });
+        }
+        return;
+      }
+
+      _analysis = llmResult.analysis;
 
       // Success - Navigate to result
       if (mounted) {
@@ -280,14 +312,15 @@ class _ProcessingScreenState extends State<ProcessingScreen>
           AppRouter.result,
           extra: {
             'imagePath': widget.imagePath,
-            'mockResult': true, // TODO: Replace with actual analysis result
+            'ocrText': _ocrText,
+            'analysis': _analysis,
           },
         );
       }
     } catch (e) {
       if (mounted) {
         setState(() {
-          _errorMessage = '解析に失敗しました: $e';
+          _errorMessage = '解析中にエラーが発生しました: $e';
         });
       }
     }
