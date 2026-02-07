@@ -9,8 +9,8 @@ import '../../features/camera/presentation/screens/camera_screen.dart';
 import '../../features/camera/presentation/screens/crop_screen.dart';
 import '../../features/processing/presentation/screens/processing_screen.dart';
 import '../../features/result/presentation/screens/result_screen.dart';
-// import '../../features/history/presentation/screens/history_screen.dart';
-// import '../../features/history/presentation/screens/detail_screen.dart';
+import '../../features/history/presentation/screens/history_screen.dart';
+import '../../features/history/presentation/screens/detail_screen.dart';
 // import '../../features/settings/presentation/screens/settings_screen.dart';
 
 /// Fortune Vault App Router Configuration
@@ -97,20 +97,20 @@ class AppRouter {
       GoRoute(
         path: history,
         name: 'history',
-        builder: (context, state) => const _PlaceholderScreen(
-          title: 'History',
-          description: 'History画面を実装予定',
-        ),
+        builder: (context, state) => const HistoryScreen(),
       ),
       GoRoute(
         path: detail,
         name: 'detail',
         builder: (context, state) {
           final id = state.pathParameters['id'];
-          return _PlaceholderScreen(
-            title: 'Detail',
-            description: 'Detail画面を実装予定 (ID: $id)',
-          );
+          if (id == null) {
+            return const _PlaceholderScreen(
+              title: 'エラー',
+              description: 'IDが指定されていません',
+            );
+          }
+          return DetailScreen(entryId: id);
         },
       ),
       GoRoute(
