@@ -163,19 +163,19 @@ fortune_vault/
 ### Phase 1: Project Setup & Foundation ✅
 - [x] Flutter project creation
 - [x] PROJECT_PLAN.md creation
-- [ ] Directory structure setup
-- [ ] Core constants (Colors, TextStyles, Layout)
-- [ ] Theme configuration (Material 3)
-- [ ] Router setup (go_router)
-- [ ] Add essential dependencies to pubspec.yaml
-- [ ] Database schema design (sqflite)
-- [ ] Data models implementation (OmikujiEntry, FortuneAnalysis)
+- [x] Directory structure setup
+- [x] Core constants (Colors, TextStyles, Layout)
+- [x] Theme configuration (Material 3)
+- [x] Router setup (go_router)
+- [x] Add essential dependencies to pubspec.yaml
+- [x] Data models implementation (OmikujiEntry, FortuneAnalysis)
+- [ ] Database schema design (sqflite) - Phase 3
 
 ### Phase 2: MVP - Core UI Screens 🔄
-- [ ] **Home Screen**
-  - [ ] "撮影する" button with camera icon
-  - [ ] "履歴" button to navigate to history
-  - [ ] Empty state illustration
+- [x] **Home Screen**
+  - [x] "撮影する" button with camera icon
+  - [x] "履歴" button to navigate to history
+  - [x] Empty state illustration
 - [ ] **Camera Screen**
   - [ ] Camera preview integration
   - [ ] Guide overlay (frame + tips)
@@ -312,5 +312,5 @@ fortune_vault/
 ---
 
 **Last Updated:** 2026-02-07
-**Current Phase:** Phase 1 - Project Setup & Foundation
-**Overall Progress:** 15% Complete
+**Current Phase:** Phase 2 - MVP Core UI Screens
+**Overall Progress:** 25% Complete
