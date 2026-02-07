@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 
 // Import screens
 import '../../features/home/presentation/screens/home_screen.dart';
-// import '../../features/camera/presentation/screens/camera_screen.dart';
-// import '../../features/camera/presentation/screens/crop_screen.dart';
-// import '../../features/processing/presentation/screens/processing_screen.dart';
-// import '../../features/result/presentation/screens/result_screen.dart';
+import '../../features/camera/presentation/screens/camera_screen.dart';
+import '../../features/camera/presentation/screens/crop_screen.dart';
+import '../../features/processing/presentation/screens/processing_screen.dart';
+import '../../features/result/presentation/screens/result_screen.dart';
 // import '../../features/history/presentation/screens/history_screen.dart';
 // import '../../features/history/presentation/screens/detail_screen.dart';
 // import '../../features/settings/presentation/screens/settings_screen.dart';
@@ -41,34 +41,58 @@ class AppRouter {
       GoRoute(
         path: camera,
         name: 'camera',
-        builder: (context, state) => const _PlaceholderScreen(
-          title: 'Camera',
-          description: 'Camera画面を実装予定',
-        ),
+        builder: (context, state) => const CameraScreen(),
       ),
       GoRoute(
         path: crop,
         name: 'crop',
-        builder: (context, state) => const _PlaceholderScreen(
-          title: 'Crop',
-          description: 'Crop画面を実装予定',
-        ),
+        builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>?;
+          final imagePath = extra?['imagePath'] as String?;
+
+          if (imagePath == null) {
+            return const _PlaceholderScreen(
+              title: 'エラー',
+              description: '画像パスが指定されていません',
+            );
+          }
+
+          return CropScreen(imagePath: imagePath);
+        },
       ),
       GoRoute(
         path: processing,
         name: 'processing',
-        builder: (context, state) => const _PlaceholderScreen(
-          title: 'Processing',
-          description: 'Processing画面を実装予定',
-        ),
+        builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>?;
+          final imagePath = extra?['imagePath'] as String?;
+
+          if (imagePath == null) {
+            return const _PlaceholderScreen(
+              title: 'エラー',
+              description: '画像パスが指定されていません',
+            );
+          }
+
+          return ProcessingScreen(imagePath: imagePath);
+        },
       ),
       GoRoute(
         path: result,
         name: 'result',
-        builder: (context, state) => const _PlaceholderScreen(
-          title: 'Result',
-          description: 'Result画面を実装予定',
-        ),
+        builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>?;
+          final imagePath = extra?['imagePath'] as String?;
+
+          if (imagePath == null) {
+            return const _PlaceholderScreen(
+              title: 'エラー',
+              description: '画像パスが指定されていません',
+            );
+          }
+
+          return ResultScreen(imagePath: imagePath);
+        },
       ),
       GoRoute(
         path: history,
