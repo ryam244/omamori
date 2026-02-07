@@ -7,10 +7,11 @@ import 'package:flutter/material.dart';
 class AppLayout {
   AppLayout._();
 
-  // Spacing Scale (8px base)
+  // Spacing Scale (8px base) - MINIMAL DESIGN: Extra spacing for breathability
   static const double space0 = 0;
   static const double space2 = 2;
   static const double space4 = 4;
+  static const double space6 = 6;
   static const double space8 = 8;
   static const double space12 = 12;
   static const double space16 = 16;
@@ -20,6 +21,8 @@ class AppLayout {
   static const double space40 = 40;
   static const double space48 = 48;
   static const double space64 = 64;
+  static const double space80 = 80; // Extra large spacing
+  static const double space96 = 96; // Extra large spacing
 
   // Edge Insets (Padding/Margin)
   static const EdgeInsets paddingZero = EdgeInsets.zero;
@@ -81,9 +84,10 @@ class AppLayout {
   static const double buttonWidthMD = 120;
   static const double buttonWidthLG = 160;
 
-  // Card Sizes
-  static const double cardElevation = 2;
-  static const double cardElevationHover = 4;
+  // Card Sizes - MINIMAL DESIGN: Flat cards with borders instead of shadows
+  static const double cardElevation = 0; // Flat design
+  static const double cardElevationHover = 0; // No elevation on hover
+  static const double cardBorderWidth = 1; // Border width for flat cards
   static const double cardMinHeight = 120;
 
   // Fortune Card Specific
@@ -116,10 +120,10 @@ class AppLayout {
   static const double dividerThickness = 1;
   static const double dividerIndent = space16;
 
-  // Shadow
+  // Shadow - MINIMAL DESIGN: Very subtle shadows (or use borders instead)
   static const List<BoxShadow> shadowSM = [
     BoxShadow(
-      color: Color(0x1A000000),
+      color: Color(0x05000000), // Very subtle
       offset: Offset(0, 1),
       blurRadius: 2,
     ),
@@ -127,7 +131,7 @@ class AppLayout {
 
   static const List<BoxShadow> shadowMD = [
     BoxShadow(
-      color: Color(0x1F000000),
+      color: Color(0x08000000), // Very subtle
       offset: Offset(0, 2),
       blurRadius: 4,
     ),
@@ -135,11 +139,14 @@ class AppLayout {
 
   static const List<BoxShadow> shadowLG = [
     BoxShadow(
-      color: Color(0x24000000),
+      color: Color(0x0A000000), // Very subtle
       offset: Offset(0, 4),
       blurRadius: 8,
     ),
   ];
+
+  // No shadow (for flat design with borders)
+  static const List<BoxShadow> shadowNone = [];
 
   // Duration (Animations)
   static const Duration durationFast = Duration(milliseconds: 150);

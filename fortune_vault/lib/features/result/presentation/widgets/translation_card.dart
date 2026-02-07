@@ -25,7 +25,10 @@ class TranslationCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.cardBackground,
         borderRadius: AppLayout.borderRadiusLG,
-        boxShadow: AppLayout.shadowMD,
+        border: Border.all(
+          color: AppColors.border,
+          width: AppLayout.cardBorderWidth,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

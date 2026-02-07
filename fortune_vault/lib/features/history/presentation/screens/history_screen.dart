@@ -150,9 +150,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
       margin: AppLayout.paddingMD,
       padding: AppLayout.paddingMD,
       decoration: BoxDecoration(
-        gradient: AppColors.fortuneCardGradient,
+        color: AppColors.fortuneCardBackground,
         borderRadius: AppLayout.borderRadiusMD,
-        boxShadow: AppLayout.shadowSM,
+        border: Border.all(
+          color: AppColors.border,
+          width: AppLayout.cardBorderWidth,
+        ),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,

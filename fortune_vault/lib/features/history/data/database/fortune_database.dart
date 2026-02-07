@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import '../../../../models/omikuji_entry.dart';
+import '../../../../models/fortune_analysis.dart';
 
 /// Fortune Database
 /// Manages local SQLite database for storing fortune entries

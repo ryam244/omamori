@@ -54,22 +54,26 @@ class AppTheme {
         titleTextStyle: AppTextStyles.headlineMedium,
       ),
 
-      // Card Theme
-      cardTheme: CardTheme(
+      // Card Theme - MINIMAL DESIGN: Flat cards with borders
+      cardTheme: const CardThemeData(
         color: AppColors.cardBackground,
-        elevation: 2,
+        elevation: 0, // Flat design
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.all(Radius.circular(12)),
+          side: BorderSide(
+            color: AppColors.border,
+            width: 1,
+          ),
         ),
         margin: EdgeInsets.zero,
       ),
 
-      // Button Themes
+      // Button Themes - MINIMAL DESIGN: Reduced elevation
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary,
           foregroundColor: AppColors.textWhite,
-          elevation: 2,
+          elevation: 0, // Flat design
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
@@ -201,11 +205,11 @@ class AppTheme {
       ),
 
       // Dialog Theme
-      dialogTheme: DialogTheme(
+      dialogTheme: const DialogThemeData(
         backgroundColor: AppColors.surface,
         elevation: 8,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.all(Radius.circular(16)),
         ),
         titleTextStyle: AppTextStyles.headlineSmall,
         contentTextStyle: AppTextStyles.bodyMedium,
@@ -313,11 +317,15 @@ class AppTheme {
         ),
       ),
 
-      cardTheme: CardTheme(
+      cardTheme: const CardThemeData(
         color: AppColors.cardBackgroundDark,
-        elevation: 4,
+        elevation: 0, // Flat design
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.all(Radius.circular(12)),
+          side: BorderSide(
+            color: AppColors.border,
+            width: 1,
+          ),
         ),
       ),
 

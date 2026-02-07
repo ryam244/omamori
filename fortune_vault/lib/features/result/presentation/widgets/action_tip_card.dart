@@ -21,9 +21,12 @@ class ActionTipCard extends StatelessWidget {
       width: double.infinity,
       padding: AppLayout.paddingLG,
       decoration: BoxDecoration(
-        gradient: AppColors.actionTipGradient,
+        color: AppColors.actionTipBackground,
         borderRadius: AppLayout.borderRadiusLG,
-        boxShadow: AppLayout.shadowMD,
+        border: Border.all(
+          color: AppColors.border,
+          width: AppLayout.cardBorderWidth,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

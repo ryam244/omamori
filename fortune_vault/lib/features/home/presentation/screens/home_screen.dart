@@ -54,9 +54,12 @@ class HomeScreen extends StatelessWidget {
           width: 80,
           height: 80,
           decoration: BoxDecoration(
-            gradient: AppColors.fortuneCardGradient,
+            color: AppColors.fortuneCardBackground,
             borderRadius: BorderRadius.circular(20),
-            boxShadow: AppLayout.shadowMD,
+            border: Border.all(
+              color: AppColors.border,
+              width: AppLayout.cardBorderWidth,
+            ),
           ),
           child: const Icon(
             Icons.auto_awesome,

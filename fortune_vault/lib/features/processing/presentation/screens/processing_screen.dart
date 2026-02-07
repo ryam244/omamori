@@ -108,8 +108,11 @@ class _ProcessingScreenState extends State<ProcessingScreen>
         height: 120,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          gradient: AppColors.fortuneCardGradient,
-          boxShadow: AppLayout.shadowLG,
+          color: AppColors.fortuneCardBackground,
+          border: Border.all(
+            color: AppColors.border,
+            width: AppLayout.cardBorderWidth,
+          ),
         ),
         child: Icon(
           _currentStage == ProcessingStage.ocr
