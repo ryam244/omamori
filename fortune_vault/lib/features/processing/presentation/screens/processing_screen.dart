@@ -31,7 +31,7 @@ class _ProcessingScreenState extends State<ProcessingScreen>
   String? _errorMessage;
 
   final OcrService _ocrService = OcrService();
-  final LlmService _llmService = LlmService(provider: LlmProvider.mock);
+  final LlmService _llmService = LlmService(provider: LlmProvider.openai);
 
   String? _ocrText;
   FortuneAnalysis? _analysis;

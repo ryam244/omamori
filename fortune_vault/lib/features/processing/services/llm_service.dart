@@ -7,9 +7,16 @@ import '../../../../models/fortune_analysis.dart';
 /// LLM Service
 /// Analyzes fortune text using Large Language Models
 class LlmService {
-  // TODO: Replace with actual API keys from environment variables
-  static const String _openaiApiKey = 'YOUR_OPENAI_API_KEY';
-  static const String _anthropicApiKey = 'YOUR_ANTHROPIC_API_KEY';
+  // API Keys - Set via environment variables or defaultValue for local development
+  // Usage: flutter run --dart-define=OPENAI_API_KEY=sk-...
+  static const String _openaiApiKey = String.fromEnvironment(
+    'OPENAI_API_KEY',
+    defaultValue: '', // Add your key here for local testing
+  );
+  static const String _anthropicApiKey = String.fromEnvironment(
+    'ANTHROPIC_API_KEY',
+    defaultValue: '',
+  );
 
   final LlmProvider provider;
 

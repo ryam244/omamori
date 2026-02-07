@@ -97,18 +97,30 @@ dart run build_runner build --delete-conflicting-outputs
 flutter run
 ```
 
-### 環境変数（オプション）
+### API設定（LLM解析用）
 
-LLM APIを使用する場合、以下のAPIキーを設定してください：
-
-```dart
-// lib/features/processing/services/llm_service.dart
-
-static const String _openaiApiKey = 'YOUR_OPENAI_API_KEY';
-static const String _anthropicApiKey = 'YOUR_ANTHROPIC_API_KEY';
+**方法1: 環境変数で設定（推奨・安全）**
+```bash
+# OpenAI APIキーを使って実行
+flutter run --dart-define=OPENAI_API_KEY=sk-proj-your-key-here
 ```
 
-**注**: デフォルトではモックモード（`LlmProvider.mock`）で動作します。
+**方法2: コードに直接設定（開発用のみ）**
+```dart
+// lib/features/processing/services/llm_service.dart の defaultValue を編集
+static const String _openaiApiKey = String.fromEnvironment(
+  'OPENAI_API_KEY',
+  defaultValue: 'ここにAPIキーを入力', // ⚠️ Gitにコミットしない
+);
+```
+
+**方法3: モックモード（APIキー不要）**
+```dart
+// lib/features/processing/presentation/screens/processing_screen.dart
+final LlmService _llmService = LlmService(provider: LlmProvider.mock);
+```
+
+**注**: デフォルトは `LlmProvider.openai`。APIキーが空の場合、エラーメッセージが表示されます。
 
 ---
 
