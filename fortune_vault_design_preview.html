@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fortune Vault - デザインプレビュー（ミニマル）</title>
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Minimal Design Color Palette */
+        :root {
+            /* Primary - Indigo */
+            --primary: #3F51B5;
+            --primary-light: #757DE8;
+            --primary-dark: #002984;
+
+            /* Monochrome */
+            --black: #000000;
+            --white: #FFFFFF;
+            --gray-50: #FAFAFA;
+            --gray-100: #F5F5F5;
+            --gray-200: #EEEEEE;
+            --gray-300: #E0E0E0;
+            --gray-400: #BDBDBD;
+            --gray-500: #9E9E9E;
+            --gray-600: #757575;
+            --gray-700: #616161;
+            --gray-800: #424242;
+            --gray-900: #212121;
+
+            /* Text */
+            --text-primary: #212121;
+            --text-secondary: #757575;
+            --text-hint: #9E9E9E;
+
+            /* Semantic */
+            --error: #F44336;
+            --success: #4CAF50;
+
+            /* UI */
+            --border: #E0E0E0;
+            --card-bg: #FFFFFF;
+            --fortune-card-bg: #FAFAFA;
+            --action-tip-bg: #F5F5F5;
+
+            /* Spacing (8px base) */
+            --space-4: 4px;
+            --space-8: 8px;
+            --space-12: 12px;
+            --space-16: 16px;
+            --space-20: 20px;
+            --space-24: 24px;
+            --space-32: 32px;
+            --space-48: 48px;
+            --space-64: 64px;
+
+            /* Border Radius */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', Meiryo, メイリオ, sans-serif;
+            background: var(--white);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: var(--space-20);
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: var(--space-32);
+            color: var(--text-primary);
+        }
+
+        h2 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-top: var(--space-48);
+            margin-bottom: var(--space-24);
+            color: var(--text-primary);
+        }
+
+        /* Card Base */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-24);
+            margin-bottom: var(--space-16);
+        }
+
+        /* Result Cards (3-stage) */
+        .summary-card {
+            background: var(--fortune-card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-24);
+            margin-bottom: var(--space-24);
+        }
+
+        .translation-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-24);
+            margin-bottom: var(--space-24);
+        }
+
+        .action-tip-card {
+            background: var(--action-tip-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-24);
+            margin-bottom: var(--space-24);
+        }
+
+        /* Card Header */
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: var(--space-16);
+        }
+
+        .card-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: var(--space-8);
+            color: var(--primary);
+        }
+
+        .card-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Fortune Grade Badge */
+        .fortune-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--gray-900);
+            color: var(--white);
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: var(--radius-sm);
+            margin-bottom: var(--space-12);
+        }
+
+        /* Card Content */
+        .card-content {
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--text-primary);
+        }
+
+        .card-content.large {
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        /* Keywords */
+        .keywords {
+            display: flex;
+            gap: var(--space-8);
+            margin-top: var(--space-20);
+            padding-top: var(--space-16);
+            border-top: 1px solid var(--border);
+        }
+
+        .keyword-chip {
+            padding: 4px 12px;
+            background: rgba(63, 81, 181, 0.1);
+            border: 1px solid rgba(63, 81, 181, 0.3);
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            color: var(--primary);
+        }
+
+        /* Action Tip Bullet */
+        .action-tip-content {
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .bullet {
+            width: 4px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 50%;
+            margin-right: var(--space-12);
+            margin-top: 10px;
+            flex-shrink: 0;
+        }
+
+        /* History List Item */
+        .history-item {
+            display: flex;
+            align-items: center;
+            padding: var(--space-16);
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--space-12);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .history-item:hover {
+            background: var(--gray-50);
+        }
+
+        .history-thumbnail {
+            width: 100px;
+            height: 100px;
+            background: var(--gray-200);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            margin-right: var(--space-12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-hint);
+            font-size: 14px;
+        }
+
+        .history-content {
+            flex: 1;
+        }
+
+        .history-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: var(--space-4);
+        }
+
+        .history-meta {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: var(--space-4);
+        }
+
+        /* Stats Card */
+        .stats-card {
+            background: var(--fortune-card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: var(--space-16);
+            margin-bottom: var(--space-24);
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-icon {
+            width: 24px;
+            height: 24px;
+            color: var(--primary);
+            margin-bottom: var(--space-4);
+        }
+
+        .stat-value {
+            font-size: 22px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: var(--space-4);
+        }
+
+        /* Button */
+        .btn {
+            display: inline-block;
+            padding: 16px 24px;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 1.5px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: rgba(63, 81, 181, 0.05);
+        }
+
+        /* Home Screen Elements */
+        .app-logo {
+            width: 80px;
+            height: 80px;
+            background: var(--fortune-card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--space-16);
+        }
+
+        .app-title {
+            font-size: 32px;
+            font-weight: bold;
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: var(--space-8);
+        }
+
+        .app-subtitle {
+            font-size: 16px;
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-48);
+        }
+
+        /* Color Palette Preview */
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: var(--space-12);
+            margin-top: var(--space-24);
+        }
+
+        .color-swatch {
+            text-align: center;
+        }
+
+        .color-box {
+            width: 100%;
+            height: 60px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            margin-bottom: var(--space-8);
+        }
+
+        .color-name {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            body {
+                padding: var(--space-12);
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .card {
+                padding: var(--space-16);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Fortune Vault - ミニマルデザインプレビュー</h1>
+
+        <!-- Color Palette -->
+        <section>
+            <h2>カラーパレット</h2>
+            <div class="color-palette">
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #3F51B5;"></div>
+                    <div class="color-name">Primary<br>Indigo</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #212121;"></div>
+                    <div class="color-name">Gray 900<br>Black</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #757575;"></div>
+                    <div class="color-name">Gray 600<br>Secondary</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #E0E0E0;"></div>
+                    <div class="color-name">Gray 300<br>Border</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #FAFAFA;"></div>
+                    <div class="color-name">Gray 50<br>Background</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #FFFFFF; border: 2px solid #E0E0E0;"></div>
+                    <div class="color-name">White<br>Card</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Home Screen -->
+        <section>
+            <h2>ホーム画面</h2>
+            <div style="text-align: center; margin-bottom: var(--space-32);">
+                <div class="app-logo">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--primary);">
+                        <path d="M12 3l9 4.5v9L12 21l-9-4.5v-9L12 3z"/>
+                        <path d="M12 12l9-4.5M12 12v9M12 12L3 7.5"/>
+                    </svg>
+                </div>
+                <div class="app-title">Fortune Vault</div>
+                <div class="app-subtitle">おみくじを撮って、意味を知ろう</div>
+                <button class="btn">📷 おみくじを撮影</button>
+            </div>
+        </section>
+
+        <!-- Result Screen (3-stage display) -->
+        <section>
+            <h2>結果画面（3段構成）</h2>
+
+            <!-- Stage 1: Summary -->
+            <div class="summary-card">
+                <div class="card-header">
+                    <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2l2 7h7l-5.5 4 2 7L12 16l-5.5 4 2-7L3 9h7z"/>
+                    </svg>
+                    <div class="card-label">一言で言うと</div>
+                </div>
+                <div class="fortune-badge">大吉</div>
+                <div class="card-content large">
+                    新しいことを始めるのに最適な時期です
+                </div>
+            </div>
+
+            <!-- Stage 2: Translation -->
+            <div class="translation-card">
+                <div class="card-header">
+                    <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10"/>
+                    </svg>
+                    <div class="card-label">現代語訳</div>
+                </div>
+                <div class="card-content">
+                    あなたは今、とても運気の良い状態にあります。これまで温めていたアイデアや計画を実行に移す絶好のタイミングです。周囲の人々もあなたをサポートしてくれるでしょう。自信を持って前に進んでください。
+                </div>
+                <div class="keywords">
+                    <span class="keyword-chip">挑戦</span>
+                    <span class="keyword-chip">新しい始まり</span>
+                    <span class="keyword-chip">サポート</span>
+                </div>
+            </div>
+
+            <!-- Stage 3: Action Tip -->
+            <div class="action-tip-card">
+                <div class="card-header">
+                    <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 16v-4m0-4h.01"/>
+                    </svg>
+                    <div class="card-label">今日の一手</div>
+                </div>
+                <div class="action-tip-content">
+                    <div class="bullet"></div>
+                    <div class="card-content">
+                        今日は気になっていた新しいことに挑戦してみましょう。小さな一歩でも構いません。勇気を出して踏み出すことで、新しい道が開けます。
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: var(--space-12); margin-top: var(--space-24);">
+                <button class="btn" style="flex: 1;">💾 保存</button>
+                <button class="btn-outline btn" style="flex: 1;">📤 シェア</button>
+            </div>
+        </section>
+
+        <!-- History Screen -->
+        <section>
+            <h2>履歴画面</h2>
+
+            <!-- Stats -->
+            <div class="stats-card">
+                <div class="stat-item">
+                    <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2l2 7h7l-5.5 4 2 7L12 16l-5.5 4 2-7L3 9h7z"/>
+                    </svg>
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">合計</div>
+                </div>
+                <div class="stat-item">
+                    <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2l2 7h7l-5.5 4 2 7L12 16l-5.5 4 2-7L3 9h7z"/>
+                    </svg>
+                    <div class="stat-value">3</div>
+                    <div class="stat-label">大吉</div>
+                </div>
+                <div class="stat-item">
+                    <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+                    </svg>
+                    <div class="stat-value">5</div>
+                    <div class="stat-label">吉</div>
+                </div>
+            </div>
+
+            <!-- History List -->
+            <div class="history-item">
+                <div class="history-thumbnail">📄 画像</div>
+                <div class="history-content">
+                    <div class="fortune-badge" style="font-size: 11px; padding: 2px 8px;">大吉</div>
+                    <div class="history-title">新しいことを始めるのに最適な時期です</div>
+                    <div class="history-meta">📍 明治神宮 • 📅 2/8</div>
+                </div>
+                <svg style="width: 20px; height: 20px; color: var(--text-hint);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 18l6-6-6-6"/>
+                </svg>
+            </div>
+
+            <div class="history-item">
+                <div class="history-thumbnail">📄 画像</div>
+                <div class="history-content">
+                    <div class="fortune-badge" style="font-size: 11px; padding: 2px 8px; background: var(--gray-800);">吉</div>
+                    <div class="history-title">着実に進めば良い結果が待っています</div>
+                    <div class="history-meta">📍 浅草寺 • 📅 2/5</div>
+                </div>
+                <svg style="width: 20px; height: 20px; color: var(--text-hint);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 18l6-6-6-6"/>
+                </svg>
+            </div>
+
+            <div class="history-item">
+                <div class="history-thumbnail">📄 画像</div>
+                <div class="history-content">
+                    <div class="fortune-badge" style="font-size: 11px; padding: 2px 8px; background: var(--gray-700);">中吉</div>
+                    <div class="history-title">焦らず落ち着いて行動しましょう</div>
+                    <div class="history-meta">📍 伏見稲荷大社 • 📅 2/1</div>
+                </div>
+                <svg style="width: 20px; height: 20px; color: var(--text-hint);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 18l6-6-6-6"/>
+                </svg>
+            </div>
+        </section>
+
+        <!-- Design Notes -->
+        <section style="margin-top: var(--space-64);">
+            <h2>デザインの特徴</h2>
+            <div class="card">
+                <h3 style="font-size: 16px; font-weight: 600; margin-bottom: var(--space-12);">✅ フラットデザイン</h3>
+                <p style="color: var(--text-secondary); margin-bottom: var(--space-16);">
+                    シャドウを極限まで減らし、ボーダーで要素を区切ることで、クリーンで読みやすいUIを実現
+                </p>
+
+                <h3 style="font-size: 16px; font-weight: 600; margin-bottom: var(--space-12);">🎨 モノクロ + 単一アクセント</h3>
+                <p style="color: var(--text-secondary); margin-bottom: var(--space-16);">
+                    グレースケールをベースに、Indigo（#3F51B5）を唯一のアクセントカラーとして使用
+                </p>
+
+                <h3 style="font-size: 16px; font-weight: 600; margin-bottom: var(--space-12);">📐 余白の呼吸感</h3>
+                <p style="color: var(--text-secondary); margin-bottom: var(--space-16);">
+                    要素間のスペーシングを大きくすることで、視覚的なゆとりと読みやすさを向上
+                </p>
+
+                <h3 style="font-size: 16px; font-weight: 600; margin-bottom: var(--space-12);">🔲 ボーダーベース</h3>
+                <p style="color: var(--text-secondary);">
+                    グラデーションや重いシャドウを排除し、1pxのボーダーで要素を明確に分離
+                </p>
+            </div>
+        </section>
+
+        <footer style="text-align: center; margin-top: var(--space-64); padding: var(--space-32); color: var(--text-secondary); font-size: 14px;">
+            <p>Fortune Vault - Minimal Design Preview</p>
+            <p style="margin-top: var(--space-8);">Clean, Modern, Minimal ✨</p>
+        </footer>
+    </div>
+</body>
+</html>
